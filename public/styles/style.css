@@ -1,0 +1,25 @@
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+html{
+    background-color: rgb(255, 255, 255);
+    min-height: 100vh;
+}
+.ingreso{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: brown;
+    height: 100vh;
+}
+i{
+    color: rgb(0, 0, 0);
+}
+
+.presentacion{
+    margin-top: 56px;
+    height: 100vh;
+}
