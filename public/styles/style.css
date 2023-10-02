@@ -13,13 +13,28 @@ html{
     justify-content: center;
     align-items: center;
     color: brown;
-    height: 100vh;
 }
 i{
     color: rgb(0, 0, 0);
 }
 
-.presentacion{
+.coleccion{
     margin-top: 56px;
-    height: 100vh;
 }
+
+.categorias{
+    margin-top: 56px;
+}
+
+.lista{
+    width: 250px;
+}
+.accordion-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+/* .accordion-button:focus, .accordion-button:active {
+    outline: none;
+    box-shadow: none;
+    background-color: inherit;
+} */
