@@ -8,6 +8,14 @@ import {transporter} from '../config/index.js'
 
 const router=express.Router()
 
+//configuracion para verificar que el usuario este registrado
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.flash('error_msg', 'Please Login first to access this page.')
+    res.redirect('/ingreso');
+}
 
 //Inicio de sesion
 router.get('/ingreso',(req,res)=>{
@@ -59,9 +67,6 @@ router.post('/olvide', async (req,res)=>{
 });
 
 //Recuperar contraseña
-/* router.get('/recuperar/:token', (req, res) => {
-    res.render('pages/recuperar', { token: req.params.token });
-  }); */
 router.get('/recuperar/:token', (req, res)=> {
     User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires : {$gt : Date.now() } })
         .then(user => {
@@ -188,18 +193,23 @@ router.post('/registrar',(req,res)=>{
 
 
 //Pagina principal
-router.get('/',(req,res)=>{
+router.get('/',ensureAuthenticated,(req,res)=>{
     res.render('pages/index')
 })
 
-router.get('/categorias',(req,res)=>{
+//Pagina para categorias
+router.get('/categorias',ensureAuthenticated,(req,res)=>{
     res.render('pages/categorias')
 })
 
 
 //cerrar sesion
 router.get('/logout',(req,res)=>{
-    req.logOut()
+    req.logOut(err=>{
+        if(err){
+            return next(err)
+        }
+    })
     req.flash('success_msg','Se cerro la sesion')
     res.redirect('/ingreso')
 })
