@@ -1,0 +1,25 @@
+<%- include ('../partials/head')-%>
+<section class="ingreso">
+    <div class="container">
+    <div class="row align-items-center justify-content-around">
+        <div class="col-4">
+            <h1>Ecommerce</h1>
+        </div>
+        <div class="col-6">
+            <%- include ('../partials/messages')-%>
+            <form action="/recuperar/<%=token%>" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">New Password:</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Confirm Password:</label>
+                  <input type="password" name="confirmpassword" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+<%- include ('../partials/footer')-%>

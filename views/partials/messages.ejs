@@ -1,4 +1,4 @@
-<% if(succes_msg !=''){%>
+<% if(success_msg !=''){%>
     <div class="alert alert-success" role="alert">
         <%= success_msg %>
     </div>
@@ -9,7 +9,7 @@
         </div>
         <% } %>
 
-<% uf (error!=''){%>
+<% if (error!=''){%>
     <div class="alert alert-danger" role="alert">
         <%= error %>
     </div>

@@ -7,6 +7,7 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import flash from 'connect-flash'
 import session from 'express-session'
+import nodemailer from 'nodemailer'
 import userRoutes from '../routes/users.js'
 import User from '../models/usermodel.js'
 
@@ -31,6 +32,17 @@ mongoose.connect(process.env.DATABASE,{
 .catch(error => {
     console.log('Error al conectar a la base de datos:')
 })
+
+
+//configuracion del nodemailer
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.MAIL,
+      pass: process.env.MAILPASS, //contraseña de aplicacion
+    },
+  })
+
 
 app.use(session({
     secret:'secreto',
@@ -79,4 +91,4 @@ app.use(express.static('public'))
 //Rutas
 app.use(userRoutes)
 
-export default app
+export {app, transporter}
