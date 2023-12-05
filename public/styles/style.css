@@ -4,10 +4,6 @@ li{
 a{
     text-decoration: none;
 }
-html{
-    background-color: rgb(255, 255, 255);
-    min-height: 100vh;
-}
 .ingreso{
     display: flex;
     justify-content: center;
@@ -27,7 +23,7 @@ i{
 }
 
 .lista{
-    width: 250px;
+    width: 100vw;
 }
 .accordion-button:focus {
     outline: none;

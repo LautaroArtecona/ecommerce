@@ -8,9 +8,16 @@ let userScheme=new Schema({
         type:String,
         select:false
     },
+    role:{
+        type: String,
+        enum:['user', 'admin'],
+        default: 'user',
+    },
     resetPasswordToken:String,
     resetPasswordExpires:Date
 })
 userScheme.plugin(passportLocalMongoose,{usernameField:'email'})
+
+
 
 export default model('User',userScheme)

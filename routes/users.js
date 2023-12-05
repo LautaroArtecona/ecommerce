@@ -2,6 +2,9 @@ import express from 'express'
 import passport from 'passport'
 import crypto from 'crypto'
 import async from 'async'
+import multer from 'multer'
+import Product from '../models/productmodel.js'
+import path from 'path'
 import User from '../models/usermodel.js'
 import {transporter} from '../config/index.js'
 
@@ -16,6 +19,18 @@ function ensureAuthenticated(req, res, next) {
     req.flash('error_msg', 'Please Login first to access this page.')
     res.redirect('/ingreso');
 }
+
+//configuracion para verificar que el usuario es admin
+function isAdminAuthenticated(req, res, next) {
+    console.log('Sesión:', req.session);
+    console.log('Usuario autenticado:', req.isAuthenticated() ? req.user : 'No autenticado');
+    if (req.isAuthenticated() && req.user.role ==='admin') {
+        return next();
+    }
+    req.flash('error_msg', 'Unauthorized access.')
+    res.redirect('/ingreso');
+}
+
 
 //Inicio de sesion
 router.get('/ingreso',(req,res)=>{
@@ -214,5 +229,126 @@ router.get('/logout',(req,res)=>{
     res.redirect('/ingreso')
 })
 
+
+//RUTAS PARA ADMIN ------------------------------------------------------------------
+
+
+/* Actualizar el rol del usuario a 'admin'
+
+const usernameToUpdate = 'lautaroartecona@gmail.com';
+
+ User.findOne({ email: usernameToUpdate })
+.then((user) => {
+    if (user) {
+    // Si el usuario existe, actualizar el rol a 'admin'
+    user.role = 'admin';
+    return user.save();
+    } else {
+    console.log(`El usuario ${usernameToUpdate} no fue encontrado.`);
+    return null; // Otra opción: throw new Error('Usuario no encontrado');
+    }
+})
+.then((savedUser) => {
+    if (savedUser) {
+    console.log(`Usuario ${usernameToUpdate} actualizado exitosamente.`);
+    }
+})
+.catch((err) => {
+    console.error(`Error al actualizar el usuario ${usernameToUpdate}:`, err);
+}); */
+
+
+
+//Admin Login
+router.get('/admin-ingreso',(req,res)=>{
+    res.render('admin/adminlogin')
+})
+
+router.post('/admin-ingreso', (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user || user.role !== 'admin') {
+        req.flash('error_msg', 'Email o password inválido. Intente nuevamente.');
+        return res.redirect('/ingreso');
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/admin-menu');
+      });
+    })(req, res, next);
+});
+
+
+//Admin principal
+router.get('/admin-menu', isAdminAuthenticated,(req,res)=>{
+    res.render('admin/adminmenu')
+})
+
+
+//Admin productos
+router.get('/admin-productos', isAdminAuthenticated,(req,res)=>{
+    res.render('admin/adminprod')
+})
+
+//Middlewate para gestionar la carga de imagenes
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/img');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });
+  
+const upload = multer({ storage: storage });
+
+
+router.post('/admin-productos', upload.single('image'), async (req, res) => {
+    try {
+      // Aquí puedes acceder a la información del archivo cargado en req.file
+      const rutaImagen = 'image/' + req.file.filename;
+  
+      // Extrae los demás campos del producto desde req.body
+      const { name, price, category, season, gender } = req.body;
+  
+      // Crea un nuevo producto con la ruta de la imagen y otros campos
+      const nuevoProducto = new Product({
+        name,
+        price,
+        category,
+        season,
+        gender,
+        image: rutaImagen,
+      });
+  
+      // Guarda el producto en la base de datos
+      const productoGuardado = await nuevoProducto.save();
+  
+      // Redirige o responde según sea necesario
+        req.flash('success_msg', 'Producto agregado con éxito:',productoGuardado,)
+        console.log('Producto agregado:', productoGuardado)
+        res.redirect('/admin-productos');
+    } catch (error) {
+      console.log('Error al agregar el producto:', error);
+      res.status(500).json({ message: 'Error al agregar el producto' });
+    }
+});
+
+
+//Todos los productos
+router.get('/admin-allproductos', isAdminAuthenticated,(req,res)=>{
+    Product.find()
+    .then(products=>{
+        res.render('admin/adminallprod',{products: products})
+    })
+    .catch(err=>{
+        req.flash('error_msg', 'ERROR: '+err);
+        res.redirect('/dashboard');
+    })
+})
 
 export default router

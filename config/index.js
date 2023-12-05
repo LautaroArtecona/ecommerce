@@ -8,7 +8,9 @@ import LocalStrategy from 'passport-local'
 import flash from 'connect-flash'
 import session from 'express-session'
 import nodemailer from 'nodemailer'
+import multer from 'multer'
 import userRoutes from '../routes/users.js'
+import Product from '../models/productmodel.js'
 import User from '../models/usermodel.js'
 
 
@@ -78,6 +80,7 @@ app.use((req,res,next)=>{
     res.locals.currentUser=req.user
     next()
 })
+
 
 //obtenemos datos del formulario
 app.use(bodyParser.urlencoded({extended:true}))

@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row vh-100 align-items-center justify-content-around">
             <div class="col-4">
-                <h1>Ecommerce</h1>
+                <h1>Administration</h1>
             </div>
             <div class="col-6">
                 <%- include ('../partials/messages')-%>
-                <form action="/ingreso" method="post">
+                <form action="/admin-ingreso" method="post">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
                         <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -19,10 +19,9 @@
                     </div>
                     <div class="mb-3">
                         <a class="text-danger" href="/olvide">Did you forget your password?</a>
-                        <a class="ms-3" href="/registrar">Register</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                    <a type="submit" class="btn btn-secondary ms-3" href="/admin-ingreso">Admin</a>
+                    <button type="submit" class="btn btn-secondary">Log in</button>
+                    <a class="ms-3" href="/ingreso">Return</a>
                 </form>
             </div>
         </div>
