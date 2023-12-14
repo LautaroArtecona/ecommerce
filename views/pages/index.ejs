@@ -24,39 +24,24 @@
     </div>
 </section>
 
-<section class="container-fluid text-center  coleccion">
+<section class="container-fluid text-center my-5 pt-3">
     <h4>Arma tu outfit</h3>
     <h2>Primavera para Lucirte</h2>
     <p>Estos son los mas elegidos para vos</p>
-    <div class="row justify-content-evenly row-cols-4 g-4">
+    <div class="row justify-content-evenly row-cols-4 g-4 mt-2">
+
+    <% const primProducts = products.filter(product => product.season === 'primavera').slice(0, 4); %>
+    <% primProducts.forEach((product) => { %>
 
         <div class="col ps-0 pe-0 card" style="width: 18rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/439839-800-800?v=638145708553100000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
+            <img src="<%= product.image %>" class="card-img-top" alt="product image">
             <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text"><b><%= product.name %></b></p>
+                <p class="card-text">Season: <%= product.season %></p>
             </div>
         </div>
 
-        <div class="col ps-0 pe-0 card" style="width: 18rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/680022-800-800?v=638224547473970000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-
-        <div class="col ps-0 pe-0 card" style="width: 18rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/157038-800-800?v=638086300280300000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-
-        <div class="col ps-0 pe-0 card" style="width: 18rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/212920-800-800?v=638098247946430000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
+    <% }); %>
 
     </div>
 
@@ -64,139 +49,24 @@
 
 
 
-<section class="container-fluid presentacion">
-    <h2>Productos destacados</h2>
+<section class="container-fluid px-5 my-5 py-2">
+    <h2 class="text-center my-4">Productos destacados</h2>
     <div class="row justify-content-evenly row-cols-3 g-4">
 
+        <% const limitProducts = products.slice(0, 8); %>
+        <% limitProducts.forEach((pro)=>{%>
+
         <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
+            <img src="<%= pro.image %>" class="card-img-top" alt="Product image">
             <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
+                <h5 class="card-title"><%= pro.name %></h5>
+                <p class="card-text"><%= pro.season %></p>
+                <p>Precio: $<%= pro.price %></p>
                 <a href="#" class="btn btn-secondary">Agregar al carrito</a>
             </div>
         </div>
 
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531729-800-800?v=638161383398630000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/702813-800-800?v=638233933557800000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531158-800-800?v=638161374975400000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/406724-800-800?v=638143117195570000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
-
-
-
-        <div class="col ps-0 pe-0 card" style="width: 20rem;">
-            <img src="https://nikearprod.vtexassets.com/arquivos/ids/531141-800-800?v=638161374700700000&width=800&height=800&aspect=true" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Nike air force one still</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p>Precio:</p>
-                <a href="#" class="btn btn-secondary">Agregar al carrito</a>
-            </div>
-        </div>
+        <%})%>
 
     </div>
 </section>

@@ -209,12 +209,45 @@ router.post('/registrar',(req,res)=>{
 
 //Pagina principal
 router.get('/',ensureAuthenticated,(req,res)=>{
-    res.render('pages/index')
+    Product.find()
+    .then(products=>{
+        res.render('pages/index',{products: products})
+    })
+    .catch(err=>{
+        req.flash('error_msg', 'ERROR: '+err);
+        res.redirect('/categorias');
+    })
 })
 
 //Pagina para categorias
 router.get('/categorias',ensureAuthenticated,(req,res)=>{
-    res.render('pages/categorias')
+
+    const {category, season, gender} = req.query;
+    let query = {}
+
+    if (category){
+        query.category = category;
+    }
+    if (season){
+        query.season = season;
+    }
+    if(gender){
+        query.gender = gender;
+    }
+
+    Product.find(query)
+    .then(products=>{
+        res.render('pages/categorias',{
+            products,
+            category: category || 'Todas',
+            season: season || 'Todas',
+            gender: gender || 'Todos',
+        })
+    })
+    .catch(err=>{
+        req.flash('error_msg', 'ERROR: '+err);
+        res.redirect('/index');
+    })
 })
 
 
@@ -233,8 +266,8 @@ router.get('/logout',(req,res)=>{
 //RUTAS PARA ADMIN ------------------------------------------------------------------
 
 
-/* Actualizar el rol del usuario a 'admin'
-
+//Actualizar el rol del usuario a 'admin'
+/* 
 const usernameToUpdate = 'lautaroartecona@gmail.com';
 
  User.findOne({ email: usernameToUpdate })
@@ -255,7 +288,7 @@ const usernameToUpdate = 'lautaroartecona@gmail.com';
 })
 .catch((err) => {
     console.error(`Error al actualizar el usuario ${usernameToUpdate}:`, err);
-}); */
+});  */
 
 
 
@@ -284,8 +317,17 @@ router.post('/admin-ingreso', (req, res, next) => {
 
 
 //Admin principal
-router.get('/admin-menu', isAdminAuthenticated,(req,res)=>{
-    res.render('admin/adminmenu')
+router.get('/admin-menu', isAdminAuthenticated,async(req,res)=>{
+    try {
+        const cantidadUsuarios = await User.countDocuments();
+        const cantidadProductos = await Product.countDocuments();
+
+        res.render('admin/adminmenu', { cantidadUsuarios, cantidadProductos });
+    } catch (error) {
+        console.error('Error al obtener datos:', error);
+        req.flash('error_msg', 'Error al obtener datos.');
+        res.redirect('/admin-allusers');
+    }
 })
 
 
@@ -297,7 +339,7 @@ router.get('/admin-productos', isAdminAuthenticated,(req,res)=>{
 //Middlewate para gestionar la carga de imagenes
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'public/img');
+      cb(null, 'public/image');
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -347,8 +389,52 @@ router.get('/admin-allproductos', isAdminAuthenticated,(req,res)=>{
     })
     .catch(err=>{
         req.flash('error_msg', 'ERROR: '+err);
-        res.redirect('/dashboard');
+        res.redirect('/admin-menu');
     })
 })
+
+
+//Todos los usuarios
+router.get('/admin-allusers', isAdminAuthenticated,(req,res)=>{
+    User.find()
+    .then(users=>{
+        res.render('admin/adminallusers',{users: users})
+    })
+    .catch(err=>{
+        req.flash('error_msg', 'ERROR: '+err);
+        res.redirect('/admin-menu');
+    })
+})
+
+
+//DELETE ruta para borrar usuarios
+router.post('/delete/user/:id', (req, res)=>{
+    let searchQuery = {_id : req.params.id};
+
+    User.deleteOne(searchQuery)
+        .then(user => {
+            req.flash('success_msg', 'User deleted sucessfully.');
+            res.redirect('/admin-allusers');
+        })
+        .catch(err => {
+            req.flash('error_msg', 'ERROR: '+err);
+            res.redirect('/admin-allusers');
+        })
+});
+
+//DELETE ruta para borrar PRODUCTOS
+router.post('/delete/product/:id', (req, res)=>{
+    let searchQuery = {_id : req.params.id};
+
+    Product.deleteOne(searchQuery)
+        .then(product => {
+            req.flash('success_msg', 'Product deleted sucessfully.');
+            res.redirect('/admin-allproductos');
+        })
+        .catch(err => {
+            req.flash('error_msg', 'ERROR: '+err);
+            res.redirect('/admin-allproductos');
+        })
+});
 
 export default router

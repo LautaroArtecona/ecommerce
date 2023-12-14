@@ -13,11 +13,6 @@ a{
 i{
     color: rgb(0, 0, 0);
 }
-
-.coleccion{
-    margin-top: 56px;
-}
-
 .categorias{
     margin-top: 56px;
 }
@@ -29,8 +24,20 @@ i{
     outline: none;
     box-shadow: none;
 }
-/* .accordion-button:focus, .accordion-button:active {
-    outline: none;
-    box-shadow: none;
-    background-color: inherit;
-} */
+.img-allprod{
+    width: 50px;
+}
+.num-dash{
+    font-size: 3rem;
+}
+
+/*  FOOTER  */
+footer{
+    background-color: rgba(191, 191, 191, 0.445);
+}
+.redes>a{
+    font-size: 1.5rem;
+}
+.redes>p{
+    font-size: 1.2rem;
+}

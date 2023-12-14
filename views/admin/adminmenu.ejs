@@ -1,10 +1,60 @@
 <%- include ('../partials/head')-%>
 <%- include ('../partials/adminnav')-%>
 
-<div class="container-fluid text-center">
-    <div class="row">
-        <div class="admin-menu">col-2</div>
-        <div class="admin-prin">col-10</div>
+<div class="container text-center mt-5 pt-5">
+    <div class="row justify-content-around mt-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Users:</h6>
+                <p class="card-text num-dash"><%= cantidadUsuarios %></p>
+                <a href="/admin-allusers" class="card-link">See all users</a>
+
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Total Products</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Products:</h6>
+                <p class="card-text num-dash"><%= cantidadProductos %></p>
+                <a href="/admin-allproductos" class="card-link">See all products</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Users Online</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Online:</h6>
+                <p class="card-text num-dash">-</p>
+                <a href="/admin-menu" class="card-link">See users online</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-around mt-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">In Stock</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Products:</h6>
+                <p class="card-text num-dash">183</p>
+                <a href="/admin-menu" class="card-link">See products in stock</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Out Stock</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Products:</h6>
+                <p class="card-text num-dash">23</p>
+                <a href="/admin-menu" class="card-link">See products out of stock</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">This Month's Sales</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Products:</h6>
+                <p class="card-text num-dash">256</p>
+                <a href="/admin-menu" class="card-link">View sales</a>
+            </div>
+        </div>
     </div>
 </div>
 
